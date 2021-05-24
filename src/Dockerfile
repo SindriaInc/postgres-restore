@@ -5,8 +5,8 @@ ARG HOST_USER_UID
 ARG TIMEZONE
 
 LABEL \
-	name="postgres-backup" \
-	image="sindriaproject/postgres-backup" \
+	name="postgres-restore" \
+	image="sindriaproject/postgres-restore" \
 	tag="${TAG_VERSION}" \
 	vendor="sindria"
 
