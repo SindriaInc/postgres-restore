@@ -42,7 +42,7 @@ sed -i -E "s|@@DB_PASSWORD@@|$(cat unclean.txt)|g" /root/.pgpass
 chmod 600 /root/.pgpass
 
 # Create schema if not exists
-#psql -h ${DB_HOST} -p ${DB_PORT} -U ${DB_USERNAME} -tc "SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}'" | grep -q 1 || psql -h ${DB_HOST} -p ${DB_PORT} -U ${DB_USERNAME} -c "CREATE DATABASE ${DB_NAME}"
+psql -U ${DB_USERNAME} -h ${DB_HOST} -p ${DB_PORT} -tc "SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}'" | grep -q 1 || psql -U ${DB_USERNAME} -h ${DB_HOST} -p ${DB_PORT} -c "CREATE DATABASE ${DB_NAME}"
 
 # Restore scheme
-psql -h ${DB_HOST} -p ${DB_PORT} -d ${DB_NAME} -U ${DB_USERNAME} -f restore/${APP_NAME}_${RESTORE_DATETIME}.sql
+psql -U ${DB_USERNAME} -h ${DB_HOST} -p ${DB_PORT} -d ${DB_NAME} -f restore/${APP_NAME}_${RESTORE_DATETIME}.sql
