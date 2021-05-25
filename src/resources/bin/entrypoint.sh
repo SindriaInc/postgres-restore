@@ -57,10 +57,13 @@ chmod 600 /root/.pgpass
 echo #
 echo -e "${BLUE}Checking if schema exists...${NC}"
 
+# Preparing sql file
+printf "CREATE DATABASE $DB_NAME WITH OWNER ${DB_USERNAME};" > /var/www/app/create.sql
+
 # Create schema if not exists
 #psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = '<your db name>'" | grep -q 1 | psql -U postgres -c "CREATE DATABASE <your db name>"
 
-psql -U ${DB_USERNAME} -h ${DB_HOST} -p ${DB_PORT} -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME'" | grep -q 1 || echo -e "${YELLOW}Creating schema ${DB_NAME}...${NC}"; psql -U ${DB_USERNAME} -h ${DB_HOST} -p ${DB_PORT} -tc "CREATE DATABASE $DB_NAME"
+psql -U ${DB_USERNAME} -h ${DB_HOST} -p ${DB_PORT} -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME'" | grep -q 1 || echo -e "${YELLOW}Creating schema ${DB_NAME}...${NC}"; psql -U ${DB_USERNAME} -h ${DB_HOST} -p ${DB_PORT} -f /var/www/app/create.sql
 
 
 echo #
