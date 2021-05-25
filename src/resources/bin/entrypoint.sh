@@ -58,7 +58,10 @@ echo #
 echo -e "${BLUE}Checking if schema exists...${NC}"
 
 # Create schema if not exists
-psql -U ${DB_USERNAME} -h ${DB_HOST} -p ${DB_PORT} -tc "SELECT 1 FROM pg_database WHERE datname = ${DB_NAME}" | grep -q 1 || psql -U ${DB_USERNAME} -h ${DB_HOST} -p ${DB_PORT} -c "CREATE DATABASE ${DB_NAME}"
+#psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = '<your db name>'" | grep -q 1 | psql -U postgres -c "CREATE DATABASE <your db name>"
+
+psql -U ${DB_USERNAME} -h ${DB_HOST} -p ${DB_PORT} -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME'" | grep -q 1 || echo -e "${YELLOW}Creating schema ${DB_NAME}...${NC}"; psql -U ${DB_USERNAME} -h ${DB_HOST} -p ${DB_PORT} -c "CREATE DATABASE $DB_NAME"
+
 
 echo #
 echo -e "${BLUE}Restoring backup...${NC}"
