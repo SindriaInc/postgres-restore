@@ -10,7 +10,8 @@ NOW=$(date "+%Y-%m-%d_%H-%M-%S")
 
 # Setup restore schema name
 if [ "${RESTORE_SCHEMA}" == "" ]; then
-   RESTORE_SCHEMA=restore_${APP_NAME}_${NOW}
+   BUILD_SCHEMA=restore_${APP_NAME}_${NOW}
+   RESTORE_SCHEMA=$(echo "${BUILD_SCHEMA}" | tr '-' '_')
 fi
 
 
